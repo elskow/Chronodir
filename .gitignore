@@ -30,7 +30,7 @@ cmake-build-*/
 .idea
 *.iws
 out/
-build/
+bin/
 .idea_modules/
 atlassian-ide-plugin.xml
 .idea/replstate.xml
