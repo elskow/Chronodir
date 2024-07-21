@@ -1,0 +1,4 @@
+Chronodir
+
+a simple CLI tool that creates directories with timestamp prefixes. This helps you organize your files
+by automatically including the current date and time in the folder name.
