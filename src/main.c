@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 
 Options parse_options(int argc, char* argv[])
 {
-    Options opts = {.format = "%Y-%m-%d", .permissions = 0777, .dirName = NULL};
+    Options opts = {.format = "%Y%m%d", .permissions = 0777, .dirName = NULL};
     int opt, option_index = 0;
     while ((opt = getopt_long(argc, argv, "hf:p:", long_options, &option_index)) != -1)
     {
