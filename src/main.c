@@ -1,5 +1,21 @@
 #include "cdir.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#include <direct.h>
+#define mkdir _mkdir
+#define mode_t int
+#define F_OK 0
+
+#include "getopt.h" // Custom implementation of getopt.h for Windows
+
+#else
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <getopt.h>
+#endif
+
 static struct option long_options[] = {
     {"help", no_argument, NULL, 'h'},
     {"format", required_argument, NULL, 'f'},
@@ -42,7 +58,7 @@ int main(int argc, char* argv[])
 
 Options parse_options(int argc, char* argv[])
 {
-    Options opts = {.format = "%Y%m%d", .permissions = 0777, .dirName = NULL};
+    Options opts = { .format = "%Y%m%d", .permissions = 0777, .dirName = NULL };
     int opt, option_index = 0;
     while ((opt = getopt_long(argc, argv, "hf:p:", long_options, &option_index)) != -1)
     {
