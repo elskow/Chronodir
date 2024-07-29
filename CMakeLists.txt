@@ -1,28 +1,65 @@
 cmake_minimum_required(VERSION 3.22)
-project(Chronodir LANGUAGES C)
+
+# Project information
+project(Chronodir VERSION 1.0 LANGUAGES C)
 set(CMAKE_C_STANDARD 11)
 
+# Output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# Compiler flags
 if (MSVC)
-    set(CMAKE_C_FLAGS_DEBUG "/Zi /Od /W4")
-    set(CMAKE_C_FLAGS_RELEASE "/O2 /W4")
+    add_compile_options(
+        $<$<CONFIG:Debug>:/Zi /Od>
+        $<$<CONFIG:Release>:/O2>
+    )
 else()
-    set(CMAKE_C_FLAGS_DEBUG "-g -O0 -Wall -Wextra")
-    set(CMAKE_C_FLAGS_RELEASE "-O2 -Wall -Wextra")
+    add_compile_options(
+        $<$<CONFIG:Debug>:-g -O0 -Wall -Wextra>
+        $<$<CONFIG:Release>:-O2 -Wall -Wextra>
+    )
 endif()
 
+# Include directories
 include_directories(include)
 
-add_executable(
-        cdir src/main.c
- "include/getopt.h" "include/getopt.c")
+# Source files
+set(SOURCES
+    src/main.c
+    include/getopt.h
+    include/getopt.c
+)
 
+# Add executable
+add_executable(cdir ${SOURCES})
+
+# Set build type if not specified
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
-endif ()
+endif()
 
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
-# uncomment to install the binary
-#install(TARGETS cdir DESTINATION bin)
+# Installation settings
+include(GNUInstallDirs)
+
+if (WIN32)
+    set(INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
+else()
+    set(INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
+endif()
+
+# Install target
+install(TARGETS cdir DESTINATION ${INSTALL_DIR})
+
+# Add version information
+set_target_properties(cdir PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION 1
+)
+
+# Add include directories
+target_include_directories(cdir PRIVATE include)
+
+# Print installation directory
+message(STATUS "Installation directory: ${INSTALL_DIR}")

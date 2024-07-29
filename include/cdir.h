@@ -19,13 +19,15 @@
 #include <time.h>
 #include <ctype.h>
 
-void print_usage()
-{
-    printf("Usage: cdir [options] <directory name>\n");
+
+void print_usage() {
+    printf("Usage: cdir [options] <directory_name>\n");
     printf("Options:\n");
-    printf("  -h, --help\t\t\tPrint this help message\n");
-    printf("  -f, --format <format>\t\tSpecify the format of the date to be appended to the directory name\n");
-    printf("  -p, --permissions <permissions>\tSpecify the permissions of the directory\n");
+    printf("  -h, --help            Show this help message and exit\n");
+    printf("  -f, --format FORMAT   Specify the date format (default: %%Y%%m%%d)\n");
+#ifndef _WIN32
+    printf("  -p, --permissions PERMISSIONS   Specify the directory permissions (default: 0777)\n");
+#endif
 }
 
 int is_valid_dirname(const char* dirname)
