@@ -15,9 +15,12 @@ if (MSVC)
     )
 else()
     add_compile_options(
-        $<$<CONFIG:Debug>:-g -O0 -Wall -Wextra>
-        $<$<CONFIG:Release>:-O2 -Wall -Wextra>
+        -Wall -Wextra -Wpedantic
     )
+    set(CMAKE_C_FLAGS_DEBUG "-g -O0 -DDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+    set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g -DNDEBUG")
+    set(CMAKE_C_FLAGS_MINSIZEREL "-Os -DNDEBUG")
 endif()
 
 # Include directories
@@ -26,7 +29,6 @@ include_directories(include)
 # Source files
 set(SOURCES
     src/main.c
-    include/getopt.h
     include/getopt.c
 )
 

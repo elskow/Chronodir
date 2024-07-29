@@ -1,5 +1,7 @@
 #include "cdir.h"
 
+#include <ctype.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <direct.h>
@@ -12,7 +14,6 @@
 #else
 #include <unistd.h>
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <getopt.h>
 #endif
 
@@ -71,6 +72,7 @@ Options parse_options(int argc, char* argv[]) {
 #endif
     .dirName = NULL };
     int opt, option_index = 0;
+    char* end = NULL;
     while ((opt = getopt_long(argc, argv, "hf:p:", long_options, &option_index)) != -1) {
         switch (opt) {
         case 'h':
@@ -81,7 +83,6 @@ Options parse_options(int argc, char* argv[]) {
             break;
 #ifndef _WIN32
         case 'p':
-            char* end;
             opts.permissions = strtol(optarg, &end, 8);
             if (*end != '\0') {
                 fprintf(stderr, "Invalid permissions format.\n");
