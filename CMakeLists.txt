@@ -49,7 +49,7 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 include(GNUInstallDirs)
 
 if (WIN32)
-    set(INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
+    set(INSTALL_DIR "$ENV{USERPROFILE}/Chronodir/bin")
 else()
     set(INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
 endif()
@@ -68,3 +68,12 @@ target_include_directories(cdir PRIVATE include)
 
 # Print installation directory
 message(STATUS "Installation directory: ${INSTALL_DIR}")
+
+# Custom script to add the installation directory to the PATH environment variable on Windows
+if (WIN32)
+    install(CODE "
+        execute_process(COMMAND setx PATH \"%PATH%;${INSTALL_DIR}\")
+        message(STATUS \"Added ${INSTALL_DIR} to PATH environment variable.\")
+    ")
+endif()
+
