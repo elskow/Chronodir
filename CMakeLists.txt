@@ -10,9 +10,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Compiler flags
 if (MSVC)
     add_compile_options(
-        $<$<CONFIG:Debug>:/Zi /Od>
-        $<$<CONFIG:Release>:/O2>
+        /W4
     )
+    set(CMAKE_C_FLAGS_DEBUG "/Zi /Od /DDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE "/O2 /DNDEBUG")
+    set(CMAKE_C_FLAGS_RELWITHDEBINFO "/O2 /Zi /DNDEBUG")
+    set(CMAKE_C_FLAGS_MINSIZEREL "/Os /DNDEBUG")
 else()
     add_compile_options(
         -Wall -Wextra -Wpedantic
