@@ -83,7 +83,7 @@ Options parse_options(int argc, char* argv[]) {
             break;
 #ifndef _WIN32
         case 'p':
-            opts.permissions = strtol(optarg, &end, 8);
+            opts.permissions = (mode_t)strtol(optarg, &end, 8);
             if (*end != '\0') {
                 fprintf(stderr, "Invalid permissions format.\n");
                 exit(EXIT_FAILURE);
@@ -159,14 +159,14 @@ void create_directory(const char* dirName, const char* format
     }
 
     for (int i = 0; lowerDirName[i]; i++) {
-        lowerDirName[i] = tolower(lowerDirName[i]);
+        lowerDirName[i] = (char)tolower(lowerDirName[i]);
         if (lowerDirName[i] == ' ') {
             lowerDirName[i] = '-';
         }
     }
 
     int dirPathLength = snprintf(NULL, 0, "%s-%s", dateStr, lowerDirName) + 1;
-    char* dirPath = malloc(dirPathLength);
+    char* dirPath = (char*)malloc((size_t)dirPathLength);
     if (dirPath == NULL) {
         perror("Error allocating memory for directory path");
         free(lowerDirName);

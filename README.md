@@ -90,6 +90,52 @@ Before you begin, ensure you have the following installed:
    sudo make install
    ```
 
+
+### macOS (Clang)
+
+#### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- CMake:
+  ```sh
+  brew install cmake
+  ```
+- Clang:
+  ```sh
+    brew install llvm
+    ```
+  
+#### Steps
+
+1. **Open a terminal**:
+   - You can use the Terminal app.
+   - You can also use iTerm or any other terminal emulator of your choice.
+   - If you installed Clang using Homebrew, you can use the following command to open a terminal with the correct environment variables set:
+     ```sh
+     /usr/local/opt/llvm/bin/clang
+     ```
+     
+2. **Navigate to the project directory**:
+3. **Create a build directory and navigate into it**:
+   ```sh
+   mkdir build
+   cd build
+   ```
+4. **Run CMake to configure the project**:
+   ```sh
+    cmake ..
+    ```
+5. **Build the project**:
+    ```sh
+    make
+    ```
+6. **Install the executable**:
+    ```sh
+    sudo make install
+    ```
+
+
 ## Usage
 
 Once you have successfully installed Chronodir on your system, you can start using it to create directories with timestamp prefixes. Use the following command:

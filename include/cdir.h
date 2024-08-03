@@ -19,7 +19,7 @@
 
 
 
-void print_usage() {
+void print_usage(void) {
     printf("Usage: cdir [options] <directory_name>\n");
     printf("Options:\n");
     printf("  -h, --help            Show this help message and exit\n");

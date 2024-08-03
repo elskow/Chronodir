@@ -16,6 +16,21 @@ if (MSVC)
     set(CMAKE_C_FLAGS_RELEASE "/O2 /DNDEBUG")
     set(CMAKE_C_FLAGS_RELWITHDEBINFO "/O2 /Zi /DNDEBUG")
     set(CMAKE_C_FLAGS_MINSIZEREL "/Os /DNDEBUG")
+elseif (APPLE)
+    add_compile_options(
+        -Wall -Wextra -Wpedantic
+        -Wno-missing-braces
+        -Wno-unused-parameter
+        -Werror
+        -Wshadow
+        -Wconversion
+        -Wsign-conversion
+    )
+    set(CMAKE_C_FLAGS_DEBUG "-g -O0 -DDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+    set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g -DNDEBUG")
+    set(CMAKE_C_FLAGS_MINSIZEREL "-Os -DNDEBUG")
+    set(CMAKE_EXE_LINKER_FLAGS "-framework CoreFoundation -framework Foundation")
 else()
     add_compile_options(
         -Wall -Wextra -Wpedantic
@@ -50,6 +65,8 @@ include(GNUInstallDirs)
 
 if (WIN32)
     set(INSTALL_DIR "$ENV{USERPROFILE}/Chronodir/bin")
+elseif (APPLE)
+    set(INSTALL_DIR "/usr/local/bin")
 else()
     set(INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
 endif()
@@ -76,4 +93,3 @@ if (WIN32)
         message(STATUS \"Added ${INSTALL_DIR} to PATH environment variable.\")
     ")
 endif()
-
